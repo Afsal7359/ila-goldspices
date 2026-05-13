@@ -1,0 +1,46 @@
+import type { Metadata } from "next";
+import "./globals.css";
+import PublicWrapper from "@/components/PublicWrapper";
+
+export const metadata: Metadata = {
+  title: "Ila Gold Spices — Premium Kerala Cardamom, Pepper, Nuts & Dates",
+  description:
+    "Ila Gold Spices, a brand of AAV Global Traders Ltd, is a UK-based importer of premium Kerala spices, cashews and dates. Export-grade, lab-tested, traceable.",
+  keywords: [
+    "Kerala cardamom",
+    "green cardamom UK",
+    "Malabar pepper",
+    "wholesale spices UK",
+    "private label spices",
+    "cashew nuts wholesale",
+    "dates UK",
+  ],
+  openGraph: {
+    title: "Ila Gold Spices — Kerala's Green Gold, Packed for Your Kitchen",
+    description:
+      "Premium Kerala cardamom, Malabar pepper, cashews and dates. Lab-tested, export-grade, packed with care.",
+    type: "website",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="bg-cream-100 text-ink-900 antialiased">
+        <PublicWrapper>{children}</PublicWrapper>
+      </body>
+    </html>
+  );
+}

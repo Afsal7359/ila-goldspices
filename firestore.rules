@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Products — anyone can read, only signed-in admin can create/update/delete
+    match /products/{id} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null;
+    }
+
+    // Orders — anyone can place an order, only admin can read/update
+    match /orders/{id} {
+      allow create: if true;
+      allow read, update: if request.auth != null;
+      allow delete: if false;
+    }
+
+    // Wholesale inquiries — anyone can submit, only admin can read/update
+    match /wholesale_inquiries/{id} {
+      allow create: if true;
+      allow read, update: if request.auth != null;
+      allow delete: if false;
+    }
+
+    // Contact messages — anyone can submit, only admin can read/update
+    match /contact_messages/{id} {
+      allow create: if true;
+      allow read, update: if request.auth != null;
+      allow delete: if false;
+    }
+
+    // Site content — public read, only admin can write
+    match /site_content/{id} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
