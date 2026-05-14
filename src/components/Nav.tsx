@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const navItems = [
@@ -32,43 +33,15 @@ export default function Nav() {
       }`}
     >
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group" aria-label="Ila Gold Spices home">
-          {/* Brand mark — SVG, no background issue */}
-          <svg viewBox="0 0 64 64" className="w-14 h-14 shrink-0" aria-hidden>
-            <defs>
-              <linearGradient id="nav-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#E9D696" />
-                <stop offset="100%" stopColor="#C9A961" />
-              </linearGradient>
-            </defs>
-            {/* Dark circle */}
-            <circle cx="32" cy="32" r="31" fill="#082A20" />
-            <circle cx="32" cy="32" r="31" fill="none" stroke="#C9A961" strokeWidth="1.2" />
-            {/* Leaf / spice elements */}
-            <path d="M 18 24 Q 29 12, 38 18 Q 32 28, 18 28 Z" fill="#5FA27A" />
-            <path d="M 35 14 Q 48 6, 54 14 Q 46 25, 35 22 Z" fill="#7BB88E" />
-            <path d="M 19 26 Q 25 30, 30 28" stroke="#3A7A5A" strokeWidth="0.8" fill="none" strokeLinecap="round" />
-            {/* ila text */}
-            <text
-              x="32" y="50"
-              textAnchor="middle"
-              fontFamily="Georgia, serif"
-              fontSize="24"
-              fontStyle="italic"
-              fontWeight="bold"
-              fill="url(#nav-gold-grad)"
-            >ila</text>
-          </svg>
-
-          {/* Brand name text */}
-          <div className="flex flex-col leading-none">
-            <span className="text-3xl font-black italic text-forest-700 leading-none tracking-tight font-display group-hover:text-forest-900 transition-colors">
-              ila
-            </span>
-            <span className="text-[0.6rem] tracking-[0.35em] uppercase text-gold-700 font-semibold mt-0.5">
-              Gold Spices
-            </span>
-          </div>
+        <Link href="/" className="flex items-center group" aria-label="Ila Gold Spices home">
+          <Image
+            src="/images/logo.png"
+            alt="Ila Gold Spices"
+            width={854}
+            height={670}
+            className="h-16 w-auto object-contain"
+            priority
+          />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
