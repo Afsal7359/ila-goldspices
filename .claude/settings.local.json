@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'Switch heading font from Nunito to Roboto *)",
+      "Bash(npm run *)",
+      "Bash(git commit -m 'Replace JPEG logo with inline SVG — no background, larger, sharp at any size *)",
+      "Bash(convert --version)",
+      "Bash(magick --version)",
+      "Bash(python3 -c \"from PIL import Image; print\\('Pillow OK'\\)\")",
+      "Bash(python3)",
+      "Bash(git commit -m 'Remove logo background, crop tight, use transparent PNG in Nav *)"
+    ]
+  }
+}
