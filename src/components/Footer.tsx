@@ -21,41 +21,45 @@ export default function Footer() {
         {/* Top */}
         <div className="grid lg:grid-cols-12 gap-12 pb-16 border-b border-gold-500/20">
           <div className="lg:col-span-5">
-            <div className="flex items-center gap-3 mb-6">
-              <svg viewBox="0 0 50 50" className="w-14 h-14" aria-hidden>
-                <defs>
-                  <linearGradient id="fg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#E9D696" />
-                    <stop offset="100%" stopColor="#C9A961" />
-                  </linearGradient>
-                </defs>
-                <circle cx="25" cy="25" r="24" fill="#082A20" stroke="#C9A961" strokeWidth="0.5" />
-                <path d="M 15 18 Q 22 10, 30 14 Q 26 22, 15 22 Z" fill="#7BB88E" />
-                <path d="M 28 12 Q 36 6, 42 12 Q 36 20, 28 18 Z" fill="#5FA27A" />
-                <text
-                  x="25"
-                  y="39"
-                  textAnchor="middle"
-                  fontFamily="Georgia, serif"
-                  fontSize="22"
-                  fontStyle="italic"
-                  fill="url(#fg-gold)"
-                >
-                  ila
-                </text>
-              </svg>
-              <div>
-                <div className="font-display text-3xl italic text-gold-200">ila</div>
-                <div className="text-[0.7rem] tracking-[0.3em] text-gold-500 uppercase">
-                  Gold Spices
+            {/* Brand mark */}
+            <div className="mb-8">
+              <div className="flex items-end gap-4 mb-3">
+                <svg viewBox="0 0 60 60" className="w-20 h-20 shrink-0" aria-hidden>
+                  <defs>
+                    <linearGradient id="fg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#E9D696" />
+                      <stop offset="100%" stopColor="#C9A961" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="30" cy="30" r="29" fill="#082A20" stroke="#C9A961" strokeWidth="1" />
+                  <path d="M 18 22 Q 27 12, 36 17 Q 31 26, 18 26 Z" fill="#7BB88E" />
+                  <path d="M 33 14 Q 44 7, 50 14 Q 43 24, 33 22 Z" fill="#5FA27A" />
+                  <text
+                    x="30"
+                    y="47"
+                    textAnchor="middle"
+                    fontFamily="Georgia, serif"
+                    fontSize="26"
+                    fontStyle="italic"
+                    fill="url(#fg-gold)"
+                  >
+                    ila
+                  </text>
+                </svg>
+                <div>
+                  <div className="font-display text-6xl font-black italic text-gold-200 leading-none">ila</div>
+                  <div className="text-sm tracking-[0.4em] text-gold-500 uppercase font-semibold mt-1">
+                    Gold Spices
+                  </div>
                 </div>
               </div>
-            </div>
-            <p className="font-display italic text-lg text-cream-200 leading-relaxed max-w-md mb-6">
-              {c("footer_tagline", "From the mist of Kerala's Western Ghats to kitchens across the United Kingdom — premium spices, nuts and dates, packed with care.")}
-            </p>
-            <div className="text-xs tracking-[0.2em] uppercase text-gold-500/80">
-              {c("footer_brand_label", "A brand of AAV Global Traders Ltd")}
+              <div className="h-[1px] w-24 bg-gold-500/40 mb-6" />
+              <p className="text-base text-cream-200/80 leading-relaxed max-w-md mb-5">
+                {c("footer_tagline", "From the mist of Kerala's Western Ghats to kitchens across the United Kingdom — premium spices, nuts and dates, packed with care.")}
+              </p>
+              <div className="text-xs tracking-[0.25em] uppercase text-gold-500/70 font-medium">
+                {c("footer_brand_label", "A brand of AAV Global Traders Ltd")}
+              </div>
             </div>
           </div>
 

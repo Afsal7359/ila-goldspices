@@ -376,6 +376,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ============ VIDEO ============ */}
+      <VideoSection videoUrl={c("home_video_url", "")} eyebrow={c("home_video_eyebrow", "See it in action")} headline={c("home_video_headline", "Watch how we source and pack.")} />
+
       {/* ============ CTA ============ */}
       <section className="relative py-24 lg:py-32 bg-cream-50 overflow-hidden">
         <div className="absolute inset-0 pattern-arabesque opacity-40" />
@@ -401,6 +404,40 @@ export default function HomePage() {
         </div>
       </section>
     </>
+  );
+}
+
+function getYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+  return m ? m[1] : null;
+}
+
+function VideoSection({ videoUrl, eyebrow, headline }: { videoUrl: string; eyebrow: string; headline: string }) {
+  const id = getYouTubeId(videoUrl);
+  if (!id) return null;
+  return (
+    <section className="py-20 lg:py-28 bg-forest-800 relative overflow-hidden">
+      <div className="absolute inset-0 pattern-arabesque opacity-20 pointer-events-none" />
+      <div className="relative max-w-[1200px] mx-auto px-6 lg:px-12">
+        <Reveal className="text-center mb-10">
+          <div className="eyebrow text-gold-500 mb-4">{eyebrow}</div>
+          <h2 className="font-display text-4xl lg:text-5xl font-black text-gold-200 leading-tight">
+            {headline}
+          </h2>
+        </Reveal>
+        <Reveal delay={150}>
+          <div className="relative w-full aspect-video rounded-sm overflow-hidden shadow-2xl border border-gold-500/20">
+            <iframe
+              src={`https://www.youtube.com/embed/${id}?rel=0&modestbranding=1`}
+              title={headline}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
+          </div>
+        </Reveal>
+      </div>
+    </section>
   );
 }
 

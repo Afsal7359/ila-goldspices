@@ -37,9 +37,10 @@ export default function Nav() {
           <Image
             src="/images/logo.jpeg"
             alt="Ila Gold Spices"
-            width={120}
-            height={60}
-            className="h-12 w-auto object-contain"
+            width={200}
+            height={100}
+            className="h-20 w-auto object-contain"
+            style={{ mixBlendMode: "multiply" }}
             priority
           />
         </Link>

@@ -56,6 +56,9 @@ const SCHEMA: Section[] = [
       { key: "home_who_supply",          label: "Who We Supply List (JSON array of strings)", type: "json" },
       { key: "home_cta_headline",        label: "CTA Section Headline",     type: "textarea" },
       { key: "home_cta_description",     label: "CTA Section Description",  type: "textarea" },
+      { key: "home_video_url",           label: "YouTube Video URL (leave blank to hide video section)", type: "text" },
+      { key: "home_video_eyebrow",       label: "Video Section Eyebrow",    type: "text" },
+      { key: "home_video_headline",      label: "Video Section Headline",   type: "textarea" },
     ],
   },
   {

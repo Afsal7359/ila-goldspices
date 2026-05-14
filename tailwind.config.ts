@@ -51,7 +51,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['"Cormorant Garamond"', "Georgia", "serif"],
+        display: ['"Nunito"', "system-ui", "sans-serif"],
         sans:    ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
         mono:    ["ui-monospace", "monospace"],
       },
