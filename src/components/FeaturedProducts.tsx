@@ -2,25 +2,29 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api, ApiProduct } from "@/lib/api";
-import ProductCard from "./ProductCard";
-import Reveal from "./Reveal";
 
 export default function FeaturedProducts() {
   const [products, setProducts] = useState<ApiProduct[]>([]);
-  const [loading, setLoading]   = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     api.getProducts().then((data) => {
-      if (data) setProducts(data.slice(0, 6));
+      if (data) setProducts(data.filter((p) => p.active !== false).slice(0, 4));
       setLoading(false);
     });
   }, []);
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
-        {[...Array(3)].map((_, i) => (
-          <div key={i} className="aspect-[3/4] bg-cream-200/60 animate-pulse rounded" />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="bg-cream-100 animate-pulse">
+            <div className="aspect-square bg-cream-200" />
+            <div className="p-4 space-y-2">
+              <div className="h-4 bg-cream-200 rounded w-3/4" />
+              <div className="h-3 bg-cream-200 rounded w-1/2" />
+            </div>
+          </div>
         ))}
       </div>
     );
@@ -28,22 +32,47 @@ export default function FeaturedProducts() {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
-        {products.map((product, i) => (
-          <Reveal key={product.slug} delay={i * 80}>
-            <ProductCard product={product} />
-          </Reveal>
-        ))}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        {products.map((product) => {
+          const img = product.product_image || product.window_image || "/images/product-cardamom-hero.jpeg";
+          return (
+            <Link
+              key={product.slug}
+              href={`/products/${product.slug}`}
+              className="group bg-white border border-cream-200 hover:border-gold-400 hover:shadow-md transition-all"
+            >
+              <div className="aspect-square overflow-hidden bg-cream-100">
+                <img
+                  src={img}
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="font-display font-black text-forest-700 text-base leading-snug mb-1">
+                  {product.name}
+                </h3>
+                <p className="text-xs text-forest-700/50 mb-3">Export Grade Quality</p>
+                <span className="inline-flex items-center gap-1.5 text-xs text-forest-700 font-semibold group-hover:text-gold-700 transition-colors">
+                  View Product
+                  <svg width="12" height="9" viewBox="0 0 14 10" fill="none" aria-hidden>
+                    <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="square" />
+                  </svg>
+                </span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
-      <Reveal className="text-center mt-20">
-        <Link href="/products" className="btn-outline">
-          View all products
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
-            <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
-          </svg>
+      <div className="text-center mt-12">
+        <Link
+          href="/products"
+          className="inline-flex items-center gap-2 border-2 border-forest-700 text-forest-700 text-sm font-semibold tracking-wider uppercase px-8 py-3.5 hover:bg-forest-700 hover:text-cream-100 transition-all"
+        >
+          View All Products
         </Link>
-      </Reveal>
+      </div>
     </>
   );
 }

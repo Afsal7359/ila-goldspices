@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useContent } from "@/lib/content";
 
 export default function Footer() {
@@ -20,46 +21,27 @@ export default function Footer() {
       <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
         {/* Top */}
         <div className="grid lg:grid-cols-12 gap-12 pb-16 border-b border-gold-500/20">
-          <div className="lg:col-span-5">
-            {/* Brand mark */}
-            <div className="mb-8">
-              <div className="flex items-end gap-4 mb-3">
-                <svg viewBox="0 0 60 60" className="w-20 h-20 shrink-0" aria-hidden>
-                  <defs>
-                    <linearGradient id="fg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#E9D696" />
-                      <stop offset="100%" stopColor="#C9A961" />
-                    </linearGradient>
-                  </defs>
-                  <circle cx="30" cy="30" r="29" fill="#082A20" stroke="#C9A961" strokeWidth="1" />
-                  <path d="M 18 22 Q 27 12, 36 17 Q 31 26, 18 26 Z" fill="#7BB88E" />
-                  <path d="M 33 14 Q 44 7, 50 14 Q 43 24, 33 22 Z" fill="#5FA27A" />
-                  <text
-                    x="30"
-                    y="47"
-                    textAnchor="middle"
-                    fontFamily="Georgia, serif"
-                    fontSize="26"
-                    fontStyle="italic"
-                    fill="url(#fg-gold)"
-                  >
-                    ila
-                  </text>
-                </svg>
-                <div>
-                  <div className="font-display text-6xl font-black italic text-gold-200 leading-none">ila</div>
-                  <div className="text-sm tracking-[0.4em] text-gold-500 uppercase font-semibold mt-1">
-                    Gold Spices
-                  </div>
-                </div>
-              </div>
-              <div className="h-[1px] w-24 bg-gold-500/40 mb-6" />
-              <p className="text-base text-cream-200/80 leading-relaxed max-w-md mb-5">
-                {c("footer_tagline", "From the mist of Kerala's Western Ghats to kitchens across the United Kingdom — premium spices, nuts and dates, packed with care.")}
-              </p>
-              <div className="text-xs tracking-[0.25em] uppercase text-gold-500/70 font-medium">
-                {c("footer_brand_label", "A brand of AAV Global Traders Ltd")}
-              </div>
+          <div className="lg:col-span-4">
+            <Image
+              src="/images/logo.png"
+              alt="Ila Gold Spices"
+              width={854}
+              height={670}
+              className="h-20 w-auto object-contain mb-5"
+            />
+            <p className="text-sm text-cream-200/75 leading-relaxed max-w-xs mb-5">
+              {c("footer_tagline", "UK-Based. Kerala-Sourced. Premium Quality Spices.")}
+            </p>
+            {/* Social icons */}
+            <div className="flex items-center gap-3">
+              <a href={`https://wa.me/${c("company_whatsapp","447733058067")}`} aria-label="WhatsApp"
+                className="w-9 h-9 rounded-full border border-forest-500 flex items-center justify-center text-cream-200/70 hover:text-gold-400 hover:border-gold-500 transition-colors">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.449A11.9 11.9 0 0012.05 0C5.495 0 .16 5.335.16 11.89c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.87 11.87 0 005.69 1.448h.005c6.555 0 11.89-5.335 11.89-11.89a11.82 11.82 0 00-3.426-8.455z"/></svg>
+              </a>
+              <a href={`mailto:${c("company_email","aavglobaltraders@gmail.com")}`} aria-label="Email"
+                className="w-9 h-9 rounded-full border border-forest-500 flex items-center justify-center text-cream-200/70 hover:text-gold-400 hover:border-gold-500 transition-colors">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+              </a>
             </div>
           </div>
 
