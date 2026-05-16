@@ -1,10 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AdminGuard from "@/components/admin/AdminGuard";
 import AdminSidebar from "@/components/admin/Sidebar";
 import { api } from "@/lib/api";
 
-type FieldType = "text" | "textarea" | "json";
+const CLOUD_NAME    = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+type FieldType = "text" | "textarea" | "json" | "image";
 
 interface Field {
   key: string;
@@ -37,6 +40,8 @@ const SCHEMA: Section[] = [
   {
     id: "home", label: "🏠 Homepage",
     fields: [
+      { key: "home_hero_image",           label: "Hero Banner Image",        type: "image" },
+      { key: "home_story_image",         label: "Story Section Image",      type: "image" },
       { key: "home_hero_eyebrow",        label: "Hero Eyebrow",             type: "text" },
       { key: "home_hero_headline",       label: "Hero Headline",            type: "textarea" },
       { key: "home_hero_description",    label: "Hero Description",         type: "textarea" },
@@ -145,11 +150,13 @@ const SCHEMA: Section[] = [
 ];
 
 export default function AdminContent() {
-  const [values, setValues]         = useState<Record<string, string>>({});
-  const [loading, setLoading]       = useState(true);
-  const [saving, setSaving]         = useState<string | null>(null);
-  const [savedKey, setSavedKey]     = useState<string | null>(null);
+  const [values, setValues]           = useState<Record<string, string>>({});
+  const [loading, setLoading]         = useState(true);
+  const [saving, setSaving]           = useState<string | null>(null);
+  const [savedKey, setSavedKey]       = useState<string | null>(null);
   const [openSection, setOpenSection] = useState<string>(SCHEMA[0].id);
+  const widgetRef                     = useRef<any>(null);
+  const activeKeyRef                  = useRef<string>("");
 
   async function load() {
     const data = await api.getAllContent();
@@ -162,6 +169,41 @@ export default function AdminContent() {
   }
 
   useEffect(() => { load(); }, []);
+
+  // Initialise Cloudinary widget once
+  useEffect(() => {
+    if (!CLOUD_NAME || !UPLOAD_PRESET || typeof window === "undefined") return;
+    function initWidget() {
+      if (widgetRef.current) return;
+      widgetRef.current = (window as any).cloudinary.createUploadWidget(
+        { cloudName: CLOUD_NAME, uploadPreset: UPLOAD_PRESET, folder: "ila-gold-spices", multiple: false, sources: ["local", "url"], clientAllowedFormats: ["jpg", "jpeg", "png", "webp"], maxFileSize: 5_000_000 },
+        async (error: any, result: any) => {
+          if (!error && result?.event === "success") {
+            const url = result.info.secure_url;
+            const key = activeKeyRef.current;
+            setValues((v) => ({ ...v, [key]: url }));
+            // Auto-save immediately after upload
+            setSaving(key);
+            await api.updateContent(key, url);
+            setSaving(null);
+            setSavedKey(key);
+            setTimeout(() => setSavedKey(null), 2000);
+          }
+        }
+      );
+    }
+    if ((window as any).cloudinary) { initWidget(); return; }
+    const s = document.createElement("script");
+    s.src = "https://upload-widget.cloudinary.com/global/all.js";
+    s.onload = initWidget;
+    document.head.appendChild(s);
+  }, []);
+
+  function openUpload(key: string) {
+    activeKeyRef.current = key;
+    if (widgetRef.current) { widgetRef.current.open(); }
+    else { alert("Cloudinary not loaded — check NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME in .env.local"); }
+  }
 
   async function save(key: string) {
     setSaving(key);
@@ -225,36 +267,70 @@ export default function AdminContent() {
                             </p>
                           )}
 
-                          <div className="flex gap-3 items-start">
-                            {field.type === "text" ? (
-                              <input
-                                type="text"
-                                value={values[field.key] ?? ""}
-                                onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
-                                className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-forest-600"
-                              />
-                            ) : (
-                              <textarea
-                                rows={field.type === "json" ? 6 : 3}
-                                value={values[field.key] ?? ""}
-                                onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
-                                className={`flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-forest-600 resize-y ${
-                                  field.type === "json" ? "font-mono text-xs" : ""
-                                }`}
-                              />
-                            )}
-                            <button
-                              onClick={() => save(field.key)}
-                              disabled={saving === field.key}
-                              className="bg-forest-700 text-white px-4 py-2 rounded text-sm hover:bg-forest-800 transition-colors disabled:opacity-60 whitespace-nowrap shrink-0"
-                            >
-                              {saving === field.key
-                                ? "Saving…"
-                                : savedKey === field.key
-                                ? "Saved ✓"
-                                : "Save"}
-                            </button>
-                          </div>
+                          {field.type === "image" ? (
+                            <div className="flex flex-col gap-3">
+                              {values[field.key] && (
+                                <img
+                                  src={values[field.key]}
+                                  alt="preview"
+                                  className="h-32 w-auto rounded border border-gray-200 object-cover"
+                                />
+                              )}
+                              <div className="flex gap-3 items-center">
+                                <input
+                                  type="text"
+                                  placeholder="Image URL"
+                                  value={values[field.key] ?? ""}
+                                  onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
+                                  className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-forest-600"
+                                />
+                                <button
+                                  onClick={() => openUpload(field.key)}
+                                  className="bg-amber-600 text-white px-4 py-2 rounded text-sm hover:bg-amber-700 transition-colors whitespace-nowrap shrink-0"
+                                >
+                                  Upload
+                                </button>
+                                <button
+                                  onClick={() => save(field.key)}
+                                  disabled={saving === field.key}
+                                  className="bg-forest-700 text-white px-4 py-2 rounded text-sm hover:bg-forest-800 transition-colors disabled:opacity-60 whitespace-nowrap shrink-0"
+                                >
+                                  {saving === field.key ? "Saving…" : savedKey === field.key ? "Saved ✓" : "Save"}
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="flex gap-3 items-start">
+                              {field.type === "text" ? (
+                                <input
+                                  type="text"
+                                  value={values[field.key] ?? ""}
+                                  onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
+                                  className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-forest-600"
+                                />
+                              ) : (
+                                <textarea
+                                  rows={field.type === "json" ? 6 : 3}
+                                  value={values[field.key] ?? ""}
+                                  onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
+                                  className={`flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-forest-600 resize-y ${
+                                    field.type === "json" ? "font-mono text-xs" : ""
+                                  }`}
+                                />
+                              )}
+                              <button
+                                onClick={() => save(field.key)}
+                                disabled={saving === field.key}
+                                className="bg-forest-700 text-white px-4 py-2 rounded text-sm hover:bg-forest-800 transition-colors disabled:opacity-60 whitespace-nowrap shrink-0"
+                              >
+                                {saving === field.key
+                                  ? "Saving…"
+                                  : savedKey === field.key
+                                  ? "Saved ✓"
+                                  : "Save"}
+                              </button>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

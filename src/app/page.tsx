@@ -50,7 +50,7 @@ export default function HomePage() {
           {/* Right image */}
           <div className="relative h-[60vw] lg:h-full min-h-[400px] bg-cream-100">
             <img
-              src="/images/product-cardamom-hero.jpeg"
+              src={c("home_hero_image", "/images/product-cardamom-hero.jpeg")}
               alt="Ila Gold Spices Premium Whole Green Cardamom"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
@@ -102,7 +102,7 @@ export default function HomePage() {
           {/* Image */}
           <div className="relative h-72 lg:h-auto min-h-[420px]">
             <img
-              src="/images/product-cardamom-bulk.jpeg"
+              src={c("home_story_image", "/images/product-cardamom-bulk.jpeg")}
               alt="Kerala spice gardens"
               className="absolute inset-0 w-full h-full object-cover"
             />
