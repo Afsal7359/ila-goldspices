@@ -9,7 +9,7 @@ export default function FeaturedProducts() {
 
   useEffect(() => {
     api.getProducts().then((data) => {
-      if (data) setProducts(data.filter((p) => p.active !== false).slice(0, 4));
+      if (data) setProducts(data.filter((p) => p.active !== false));
       setLoading(false);
     });
   }, []);
@@ -17,7 +17,7 @@ export default function FeaturedProducts() {
   if (loading) {
     return (
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-        {[...Array(4)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div key={i} className="bg-cream-100 animate-pulse">
             <div className="aspect-square bg-cream-200" />
             <div className="p-4 space-y-2">
@@ -65,14 +65,6 @@ export default function FeaturedProducts() {
         })}
       </div>
 
-      <div className="text-center mt-12">
-        <Link
-          href="/products"
-          className="inline-flex items-center gap-2 border-2 border-forest-700 text-forest-700 text-sm font-semibold tracking-wider uppercase px-8 py-3.5 hover:bg-forest-700 hover:text-cream-100 transition-all"
-        >
-          View All Products
-        </Link>
-      </div>
     </>
   );
 }
