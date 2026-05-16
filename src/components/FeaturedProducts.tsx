@@ -41,11 +41,11 @@ export default function FeaturedProducts() {
               href={`/products/${product.slug}`}
               className="group bg-white border border-cream-200 hover:border-gold-400 hover:shadow-md transition-all"
             >
-              <div className="aspect-square overflow-hidden bg-cream-100">
+              <div className="aspect-square bg-cream-100 flex items-center justify-center p-4 overflow-hidden">
                 <img
                   src={img}
                   alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="p-4">

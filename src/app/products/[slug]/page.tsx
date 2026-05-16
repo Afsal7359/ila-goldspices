@@ -138,7 +138,7 @@ export default function ProductPage() {
                   <img
                     src={displayImage}
                     alt={product.name}
-                    className="relative max-h-full max-w-full object-contain drop-shadow-2xl animate-scale-in"
+                    className="absolute inset-0 w-full h-full object-contain drop-shadow-2xl animate-scale-in"
                   />
                 )}
               </div>

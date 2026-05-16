@@ -12,6 +12,7 @@ type Props = { initial?: Partial<ApiProduct>; isNew?: boolean };
 export default function ProductForm({ initial, isNew }: Props) {
   const router  = useRouter();
   const [saving, setSaving] = useState(false);
+  const [imgSaved, setImgSaved] = useState<string | null>(null);
   const widgetRef = useRef<any>(null);
   const activeFieldRef = useRef<"window_image" | "product_image">("window_image");
 
@@ -59,9 +60,17 @@ export default function ProductForm({ initial, isNew }: Props) {
           clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
           maxFileSize:  5_000_000,
         },
-        (error: any, result: any) => {
+        async (error: any, result: any) => {
           if (!error && result?.event === "success") {
-            set(activeFieldRef.current, result.info.secure_url);
+            const url = result.info.secure_url;
+            const field = activeFieldRef.current;
+            set(field, url);
+            // Auto-save to Firestore immediately if editing an existing product
+            if (initial?.id) {
+              await api.upsertProduct({ id: initial.id, [field]: url });
+              setImgSaved(field);
+              setTimeout(() => setImgSaved(null), 2500);
+            }
           }
         }
       );
@@ -128,10 +137,10 @@ export default function ProductForm({ initial, isNew }: Props) {
   const imageField = (label: string, key: "window_image" | "product_image") => (
     <div>
       <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">{label}</label>
-      <div className="flex gap-2 items-start">
+      <div className="flex gap-2 items-center">
         <input
           type="text"
-          value={form[key]}
+          value={form[key] ?? ""}
           onChange={(e) => set(key, e.target.value)}
           placeholder="https://res.cloudinary.com/…  or  /images/…"
           className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-forest-600"
@@ -139,16 +148,20 @@ export default function ProductForm({ initial, isNew }: Props) {
         <button
           type="button"
           onClick={() => openUpload(key)}
-          className="shrink-0 bg-forest-700 text-white px-3 py-2 rounded text-xs hover:bg-forest-800 transition-colors"
+          className="shrink-0 bg-amber-600 text-white px-3 py-2 rounded text-xs hover:bg-amber-700 transition-colors"
         >
           Upload
         </button>
+        {imgSaved === key && (
+          <span className="text-xs text-green-600 font-medium whitespace-nowrap">Saved ✓</span>
+        )}
       </div>
       {form[key] && (
         <img
           src={form[key]}
           alt={label}
-          className="mt-2 h-20 w-auto object-contain border border-gray-200 rounded p-1"
+          className="mt-2 h-28 w-auto object-contain border border-gray-200 rounded bg-gray-50 p-2"
+          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
         />
       )}
     </div>

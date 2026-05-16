@@ -17,7 +17,7 @@ export default function ProductCard({ product }: { product: ApiProduct }) {
             <img
               src={displayImage}
               alt={product.name}
-              className="h-full w-auto object-contain drop-shadow-2xl"
+              className="max-h-full max-w-full object-contain drop-shadow-2xl"
             />
           )}
         </div>
