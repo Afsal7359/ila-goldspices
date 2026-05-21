@@ -23,11 +23,11 @@ export default function HomePage() {
             </div>
 
             <h1 className="font-display leading-[1.05] mb-6">
-              <span className="block text-5xl sm:text-6xl lg:text-7xl font-black text-forest-700">
+              <span className="block text-5xl sm:text-6xl lg:text-7xl font-bold text-forest-700">
                 {heroLines[0]}
               </span>
               {heroLines[1] && (
-                <span className="block text-5xl sm:text-6xl lg:text-7xl font-black text-gold-600">
+                <span className="block text-5xl sm:text-6xl lg:text-7xl font-bold text-gold-600">
                   {heroLines[1]}
                 </span>
               )}
@@ -88,7 +88,7 @@ export default function HomePage() {
               </span>
               <span className="h-[1px] w-10 bg-gold-500" />
             </div>
-            <h2 className="font-display text-4xl lg:text-5xl font-black text-forest-700">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-forest-700">
               {c("home_products_headline", "Pure Spices, Perfect Flavor")}
             </h2>
           </div>
@@ -112,7 +112,7 @@ export default function HomePage() {
             <div className="text-[0.7rem] tracking-[0.25em] uppercase text-gold-700 font-semibold mb-4">
               {c("home_about_eyebrow", "Our Story")}
             </div>
-            <h2 className="font-display text-4xl lg:text-5xl font-black text-forest-700 leading-tight mb-6">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-forest-700 leading-tight mb-6">
               {c("home_about_headline", "From Kerala to Kitchens Across the UK")}
             </h2>
             <p className="text-base text-forest-700/75 leading-relaxed mb-8 max-w-lg">
@@ -133,7 +133,7 @@ export default function HomePage() {
             <div className="text-[0.7rem] tracking-[0.25em] uppercase text-gold-500 font-semibold mb-4">
               {c("home_who_eyebrow", "For Businesses")}
             </div>
-            <h2 className="font-display text-4xl lg:text-5xl font-black text-cream-100 leading-tight mb-6">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-cream-100 leading-tight mb-6">
               {c("home_wholesale_headline", "Wholesale & Bulk Supply")}
             </h2>
             <p className="text-base text-cream-200/75 leading-relaxed mb-10 max-w-lg">
@@ -195,7 +195,7 @@ function VideoSection({ videoUrl, eyebrow, headline }: { videoUrl: string; eyebr
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
         <div className="text-center mb-10">
           <div className="text-[0.7rem] tracking-[0.25em] uppercase text-gold-500 font-semibold mb-3">{eyebrow}</div>
-          <h2 className="font-display text-4xl lg:text-5xl font-black text-gold-200">{headline}</h2>
+          <h2 className="font-display text-4xl lg:text-5xl font-bold text-gold-200">{headline}</h2>
         </div>
         <div className="relative w-full aspect-video border border-gold-500/20 shadow-2xl">
           <iframe

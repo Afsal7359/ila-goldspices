@@ -49,7 +49,7 @@ export default function FeaturedProducts() {
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-display font-black text-forest-700 text-base leading-snug mb-1">
+                <h3 className="font-display font-semibold text-forest-700 text-base leading-snug mb-1">
                   {product.name}
                 </h3>
                 <p className="text-xs text-forest-700/50 mb-3">Export Grade Quality</p>
