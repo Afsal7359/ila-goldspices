@@ -4,59 +4,16 @@ import Reveal from "@/components/Reveal";
 import { Flourish } from "@/components/Ornaments";
 import { useContent, parseArr } from "@/lib/content";
 
-const STEPS_FALLBACK = [
-  {
-    title: "Send an enquiry",
-    body: "Introduce your business and what you're interested in — cardamom, pepper, nuts, dates; retail or bulk. Reach us via the contact page or WhatsApp.",
-  },
-  {
-    title: "Price list & samples",
-    body: "We provide our latest wholesale price list and, where appropriate, send small samples for quality checking.",
-  },
-  {
-    title: "Confirm product, pack size & volume",
-    body: "We agree on items, quantities, prices, payment terms and delivery schedule.",
-  },
-  {
-    title: "Order & invoice",
-    body: "For first orders we typically ask for payment before dispatch. For regular customers, other terms can be discussed.",
-  },
-  {
-    title: "Delivery or collection",
-    body: "For UK buyers we can deliver by courier or pallet network, or arrange collection from our agreed warehouse.",
-  },
-];
-
-const EXPORT_FEATURES_FALLBACK = [
-  {
-    title: "Ex-India shipments",
-    body: "FOB / CIF direct from Indian partner facilities, depending on product and buyer's preference.",
-  },
-  {
-    title: "Ex-UK shipments",
-    body: "EXW / FCA from our UK warehouse for UK-packed product destined for export markets.",
-  },
-  {
-    title: "Full documentation",
-    body: "Invoice, packing list, CoA, phytosanitary certificate, certificate of origin, B/L or AWB as applicable.",
-  },
-  {
-    title: "Forwarder flexibility",
-    body: "Work with your nominated freight forwarder, or we can introduce our own trusted partners.",
-  },
-];
 
 export default function OrderPage() {
   const c = useContent();
 
   const steps = parseArr<{ title: string; body: string }>(
-    c("order_steps", ""),
-    STEPS_FALLBACK
+    c("order_steps")
   );
 
   const exportFeatures = parseArr<{ title: string; body: string }>(
-    c("order_export_features", ""),
-    EXPORT_FEATURES_FALLBACK
+    c("order_export_features")
   );
 
   return (
@@ -66,13 +23,13 @@ export default function OrderPage() {
         <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
             <div className="eyebrow text-gold-700 mb-5 animate-fade-up">
-              {c("order_hero_eyebrow", "How to order")}
+              {c("order_hero_eyebrow")}
             </div>
             <h1
               className="font-display text-5xl sm:text-6xl lg:text-8xl text-forest-700 leading-[0.98] animate-fade-up"
               style={{ animationDelay: "150ms" }}
             >
-              {c("order_hero_headline", "Simple, from first email to delivery.")}
+              {c("order_hero_headline")}
             </h1>
           </div>
         </div>
@@ -82,9 +39,9 @@ export default function OrderPage() {
       <section className="py-20 lg:py-32 bg-cream-100 grain">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
           <Reveal className="mb-14">
-            <div className="eyebrow text-gold-700 mb-4">{c("order_steps_eyebrow", "UK trade buyers")}</div>
+            <div className="eyebrow text-gold-700 mb-4">{c("order_steps_eyebrow")}</div>
             <h2 className="font-display text-4xl lg:text-5xl text-forest-700 leading-tight max-w-3xl">
-              {c("order_steps_headline", "Wholesalers, retailers, foodservice.")}
+              {c("order_steps_headline")}
             </h2>
           </Reveal>
 
@@ -142,12 +99,12 @@ export default function OrderPage() {
         <div className="absolute inset-0 pattern-arabesque opacity-25" />
         <div className="relative max-w-[1200px] mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           <Reveal className="lg:col-span-5">
-            <div className="eyebrow text-gold-500 mb-5">{c("order_export_eyebrow", "Export & bulk")}</div>
+            <div className="eyebrow text-gold-500 mb-5">{c("order_export_eyebrow")}</div>
             <h2 className="font-display text-4xl lg:text-5xl text-gold-200 leading-tight">
-              {c("order_export_headline", "For larger international orders.")}
+              {c("order_export_headline")}
             </h2>
             <p className="mt-6 text-lg text-cream-200/80 leading-relaxed">
-              {c("order_export_description", "Typically 500 kg to multiple tonnes — shipped directly from India or from the UK, with full documentation.")}
+              {c("order_export_description")}
             </p>
           </Reveal>
 
@@ -171,7 +128,7 @@ export default function OrderPage() {
             <div className="mt-8 p-6 border-l-2 border-gold-500">
               <div className="eyebrow text-gold-500 mb-2">For quotations</div>
               <p className="text-base text-cream-200/90 leading-relaxed">
-                {c("order_export_note", "Please share your destination, required Incoterm (FOB / CIF / EXW / FCA), volumes and any special quality or packing requirements.")}
+                {c("order_export_note")}
               </p>
             </div>
           </Reveal>
@@ -183,7 +140,7 @@ export default function OrderPage() {
         <div className="relative max-w-[1000px] mx-auto px-6 lg:px-12">
           <Flourish className="w-32 h-8 text-gold-500 mx-auto mb-6" />
           <h2 className="font-display text-4xl lg:text-5xl text-forest-700 leading-tight mb-6">
-            {c("order_cta_headline", "Ready to send your first enquiry?")}
+            {c("order_cta_headline")}
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contact" className="btn-primary">

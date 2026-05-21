@@ -7,32 +7,9 @@ import { useContent, parseArr } from "@/lib/content";
 export default function AboutPage() {
   const c = useContent();
 
-  const VALUES_FALLBACK = [
-    {
-      title: "Honesty",
-      body: "Clear specifications, transparent documentation and straightforward communication.",
-    },
-    {
-      title: "Quality",
-      body: "Export-grade products with lab testing and controlled packing.",
-    },
-    {
-      title: "Long-term partnerships",
-      body: "We aim to build stable relationships with suppliers and buyers.",
-    },
-    {
-      title: "Respect for origin",
-      body: "Fair value for the farmers and processors who grow and handle our spices.",
-    },
-  ];
-
-  const values = parseArr<{ title: string; body: string }>(
-    c("about_values", ""),
-    VALUES_FALLBACK
-  );
-
-  const registeredLines = c("company_address_registered", "15 Park Street, Coventry CV6 5AT, UK").split("\n");
-  const tradingLines = c("company_address_trading", "4 Maycroft Garden, Grays RM17 6BH, UK").split("\n");
+  const values = parseArr<{ title: string; body: string }>(c("about_values"));
+  const registeredLines = c("company_address_registered").split("\n").filter(Boolean);
+  const tradingLines    = c("company_address_trading").split("\n").filter(Boolean);
 
   return (
     <>
@@ -42,19 +19,19 @@ export default function AboutPage() {
         <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
             <div className="eyebrow text-gold-700 mb-5 animate-fade-up">
-              {c("about_hero_eyebrow", "About · Ila Gold Spices")}
+              {c("about_hero_eyebrow")}
             </div>
             <h1
               className="font-display text-5xl sm:text-6xl lg:text-8xl text-forest-700 leading-[0.98] animate-fade-up"
               style={{ animationDelay: "150ms" }}
             >
-              {c("about_hero_headline", "A Kerala story, built in the UK.")}
+              {c("about_hero_headline")}
             </h1>
             <p
               className="mt-10 text-xl text-forest-700/80 leading-relaxed max-w-2xl animate-fade-up"
               style={{ animationDelay: "300ms" }}
             >
-              {c("about_hero_description", "We started with a simple goal — to bring the true aroma of Kerala's spice gardens to kitchens and businesses across the UK and beyond.")}
+              {c("about_hero_description")}
             </p>
           </div>
         </div>
@@ -77,19 +54,19 @@ export default function AboutPage() {
           <div className="lg:col-span-7 space-y-8 text-lg text-forest-700/85 leading-relaxed">
             <Reveal>
               <p>
-                {c("about_story_para1", "Growing up with the fragrance of freshly cracked cardamom pods and pepper roasted in homemade masalas, we know how much quality matters. After moving to the UK we saw a gap for spices that combine authentic Kerala origin, proper food-safety testing and modern packaging — all handled by a UK-based company that understands both worlds.")}
+                {c("about_story_para1")}
               </p>
             </Reveal>
             <Reveal delay={100}>
               <p>
-                {c("about_story_para2", "Today we work with a network of reliable processors and farmers in Kerala and selected origins, importing and packing whole green cardamom, black pepper, cashew nuts, mixed nuts and dates. Our aim is to offer products that are not only flavourful, but also safe, consistent and traceable.")}
+                {c("about_story_para2")}
               </p>
             </Reveal>
 
             <Reveal delay={200}>
               <div className="pt-6 border-t border-gold-500/30">
                 <h2 className="font-display text-3xl lg:text-4xl text-forest-700 mb-6">
-                  {c("about_values_headline", "Our values.")}
+                  {c("about_values_headline")}
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-6">
                   {values.map((v) => (
@@ -141,8 +118,8 @@ export default function AboutPage() {
           </Reveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { label: "Company No.", value: c("company_no", "16881661") },
-              { label: "EORI", value: c("company_eori", "GB045558502000") },
+              { label: "Company No.", value: c("company_no") },
+              { label: "EORI", value: c("company_eori") },
               { label: "Registered Office", value: registeredLines.join(", ") },
               { label: "Trading Address", value: tradingLines.join(", ") },
             ].map((d, i) => (
@@ -159,7 +136,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CTASection ctaHeadline={c("about_cta_headline", "Let's talk about what you need.")} />
+      <CTASection ctaHeadline={c("about_cta_headline")} />
     </>
   );
 }

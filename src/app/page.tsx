@@ -6,7 +6,9 @@ import FeaturedProducts from "@/components/FeaturedProducts";
 export default function HomePage() {
   const c = useContent();
 
-  const heroLines = c("home_hero_headline", "Kerala's\nGreen Gold").split("\n");
+  const heroLines = c("home_hero_headline").split("\n").filter(Boolean);
+  const heroImage = c("home_hero_image");
+  const storyImage = c("home_story_image");
 
   return (
     <>
@@ -18,7 +20,7 @@ export default function HomePage() {
             <div className="flex items-center gap-3 mb-6">
               <span className="h-[1px] w-8 bg-gold-600" />
               <span className="text-[0.7rem] tracking-[0.22em] uppercase text-gold-700 font-semibold">
-                {c("home_hero_eyebrow", "UK Based · Kerala Sourced")}
+                {c("home_hero_eyebrow")}
               </span>
             </div>
 
@@ -34,7 +36,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-base lg:text-lg text-forest-700/70 leading-relaxed max-w-lg mb-10">
-              {c("home_hero_description", "Premium spices, nuts and dates – sourced from the misty hills of the Western Ghats and beyond, lab-tested for safety, and packed with care in a UK-registered company.")}
+              {c("home_hero_description")}
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -49,11 +51,13 @@ export default function HomePage() {
 
           {/* Right image */}
           <div className="relative h-[60vw] lg:h-full min-h-[400px] bg-cream-100">
-            <img
-              src={c("home_hero_image", "/images/product-cardamom-hero.jpeg")}
-              alt="Ila Gold Spices Premium Whole Green Cardamom"
-              className="absolute inset-0 w-full h-full object-cover object-center"
-            />
+            {heroImage && (
+              <img
+                src={heroImage}
+                alt="Ila Gold Spices"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              />
+            )}
           </div>
         </div>
       </section>
@@ -84,12 +88,12 @@ export default function HomePage() {
             <div className="flex items-center justify-center gap-4 mb-4">
               <span className="h-[1px] w-10 bg-gold-500" />
               <span className="text-[0.65rem] tracking-[0.3em] uppercase text-gold-700 font-semibold">
-                {c("home_products_eyebrow", "Our Premium Range")}
+                {c("home_products_eyebrow")}
               </span>
               <span className="h-[1px] w-10 bg-gold-500" />
             </div>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-forest-700">
-              {c("home_products_headline", "Pure Spices, Perfect Flavor")}
+              {c("home_products_headline")}
             </h2>
           </div>
           <FeaturedProducts />
@@ -99,24 +103,24 @@ export default function HomePage() {
       {/* ── STORY ───────────────────────────────────────────── */}
       <section className="bg-cream-100">
         <div className="max-w-[1440px] mx-auto grid lg:grid-cols-2">
-          {/* Image */}
-          <div className="relative h-72 lg:h-auto min-h-[420px]">
-            <img
-              src={c("home_story_image", "/images/product-cardamom-bulk.jpeg")}
-              alt="Kerala spice gardens"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+          <div className="relative h-72 lg:h-auto min-h-[420px] bg-cream-200">
+            {storyImage && (
+              <img
+                src={storyImage}
+                alt="Kerala spice gardens"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
           </div>
-          {/* Text */}
           <div className="px-10 lg:px-16 py-16 lg:py-24 flex flex-col justify-center">
             <div className="text-[0.7rem] tracking-[0.25em] uppercase text-gold-700 font-semibold mb-4">
-              {c("home_about_eyebrow", "Our Story")}
+              {c("home_about_eyebrow")}
             </div>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-forest-700 leading-tight mb-6">
-              {c("home_about_headline", "From Kerala to Kitchens Across the UK")}
+              {c("home_about_headline")}
             </h2>
             <p className="text-base text-forest-700/75 leading-relaxed mb-8 max-w-lg">
-              {c("home_about_para1", "From the misty hills of Kerala, we bring you handpicked spices known for their rich aroma and superior quality. Carefully sourced and packed in the UK, Ila Gold Spices ensures freshness in every pack.")}
+              {c("home_about_para1")}
             </p>
             <Link href="/about" className="inline-flex items-center gap-2 bg-forest-700 text-cream-100 text-sm font-semibold tracking-wider uppercase px-7 py-3.5 self-start hover:bg-forest-800 transition-colors">
               Learn More <ArrowRight />
@@ -128,28 +132,25 @@ export default function HomePage() {
       {/* ── WHOLESALE ───────────────────────────────────────── */}
       <section className="py-20 lg:py-28 bg-forest-700">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left */}
           <div>
             <div className="text-[0.7rem] tracking-[0.25em] uppercase text-gold-500 font-semibold mb-4">
-              {c("home_who_eyebrow", "For Businesses")}
+              {c("home_who_eyebrow")}
             </div>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-cream-100 leading-tight mb-6">
-              {c("home_wholesale_headline", "Wholesale & Bulk Supply")}
+              {c("home_wholesale_headline")}
             </h2>
             <p className="text-base text-cream-200/75 leading-relaxed mb-10 max-w-lg">
-              {c("home_wholesale_description", "We supply premium quality spices in bulk for retailers, wholesalers, and food businesses across the UK.")}
+              {c("home_wholesale_description")}
             </p>
             <Link href="/wholesale" className="inline-flex items-center gap-2 border-2 border-gold-500 text-gold-300 text-sm font-semibold tracking-wider uppercase px-7 py-3.5 hover:bg-gold-500 hover:text-forest-800 transition-all">
               Request Pricing
             </Link>
           </div>
-
-          {/* Right — 3 features */}
           <div className="grid grid-cols-3 gap-6">
             {[
-              { icon: <TagIcon />,   title: "Competitive Pricing" },
+              { icon: <TagIcon />,         title: "Competitive Pricing" },
               { icon: <ShieldCheckIcon />, title: "Consistent Quality" },
-              { icon: <TruckIcon />, title: "Reliable UK Distribution" },
+              { icon: <TruckIcon />,       title: "Reliable UK Distribution" },
             ].map((f) => (
               <div key={f.title} className="flex flex-col items-center text-center gap-4">
                 <div className="w-16 h-16 rounded-full border border-gold-500/40 flex items-center justify-center text-gold-400">
@@ -164,15 +165,13 @@ export default function HomePage() {
 
       {/* ── VIDEO (shows only when URL set in admin) ─────────── */}
       <VideoSection
-        videoUrl={c("home_video_url", "")}
-        eyebrow={c("home_video_eyebrow", "See it in action")}
-        headline={c("home_video_headline", "Watch how we source and pack.")}
+        videoUrl={c("home_video_url")}
+        eyebrow={c("home_video_eyebrow")}
+        headline={c("home_video_headline")}
       />
     </>
   );
 }
-
-/* ── Small helper components ──────────────────────────────── */
 
 function ArrowRight() {
   return (
@@ -211,9 +210,7 @@ function VideoSection({ videoUrl, eyebrow, headline }: { videoUrl: string; eyebr
   );
 }
 
-/* ── Icon components ──────────────────────────────────────── */
 const iconCls = "w-6 h-6";
-
 function ShieldIcon() {
   return <svg className={iconCls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>;
 }

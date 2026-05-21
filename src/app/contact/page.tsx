@@ -39,12 +39,12 @@ export default function ContactPage() {
     setSubmitted(true);
   };
 
-  const registeredLines = c("company_address_registered", "15 Park Street\nCoventry CV6 5AT\nUnited Kingdom").split("\n");
-  const tradingLines = c("company_address_trading", "4 Maycroft Garden\nGrays RM17 6BH\nUnited Kingdom").split("\n");
-  const phoneRaw = c("company_phone_raw", "447733058067");
-  const phoneDisplay = c("company_phone_display", "+44 7733 058 067");
-  const email = c("company_email", "aavglobaltraders@gmail.com");
-  const whatsapp = c("company_whatsapp", "447733058067");
+  const registeredLines = c("company_address_registered").split("\n");
+  const tradingLines = c("company_address_trading").split("\n");
+  const phoneRaw = c("company_phone_raw");
+  const phoneDisplay = c("company_phone_display");
+  const email = c("company_email");
+  const whatsapp = c("company_whatsapp");
 
   return (
     <>
@@ -53,19 +53,19 @@ export default function ContactPage() {
         <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
             <div className="eyebrow text-gold-700 mb-5 animate-fade-up">
-              {c("contact_hero_eyebrow", "Let's talk")}
+              {c("contact_hero_eyebrow")}
             </div>
             <h1
               className="font-display text-5xl sm:text-6xl lg:text-8xl text-forest-700 leading-[0.98] animate-fade-up"
               style={{ animationDelay: "150ms" }}
             >
-              {c("contact_hero_headline", "Samples, prices, conversations.")}
+              {c("contact_hero_headline")}
             </h1>
             <p
               className="mt-8 text-xl text-forest-700/80 leading-relaxed max-w-2xl animate-fade-up"
               style={{ animationDelay: "300ms" }}
             >
-              {c("contact_hero_description", "We aim to reply to all messages within 1–2 working days. For urgent wholesale enquiries, please message us directly on WhatsApp.")}
+              {c("contact_hero_description")}
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function ContactPage() {
               <div className="relative">
                 <div className="eyebrow text-gold-500 mb-5">Reach us</div>
                 <h2 className="font-display text-3xl lg:text-4xl text-gold-200 leading-tight mb-10">
-                  {c("company_name", "AAV Global Traders Ltd")}
+                  {c("company_name")}
                 </h2>
 
                 <div className="space-y-6 text-sm">
@@ -115,8 +115,8 @@ export default function ContactPage() {
                 <div className="mt-10 pt-6 border-t border-gold-500/30">
                   <div className="eyebrow text-gold-500 mb-3">Registration</div>
                   <div className="space-y-1 text-sm text-cream-200/85">
-                    <div>Company No. {c("company_no", "16881661")}</div>
-                    <div>EORI {c("company_eori", "GB045558502000")}</div>
+                    <div>Company No. {c("company_no")}</div>
+                    <div>EORI {c("company_eori")}</div>
                   </div>
                 </div>
 

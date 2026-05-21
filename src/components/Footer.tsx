@@ -6,11 +6,11 @@ import { useContent } from "@/lib/content";
 export default function Footer() {
   const c = useContent();
 
-  const registeredLines = c("company_address_registered", "15 Park Street, Coventry\nCV6 5AT, United Kingdom").split("\n");
-  const tradingLines = c("company_address_trading", "4 Maycroft Garden, Grays\nRM17 6BH, United Kingdom").split("\n");
-  const phoneRaw = c("company_phone_raw", "447733058067");
-  const phoneDisplay = c("company_phone_display", "+44 7733 058 067");
-  const email = c("company_email", "aavglobaltraders@gmail.com");
+  const registeredLines = c("company_address_registered").split("\n");
+  const tradingLines = c("company_address_trading").split("\n");
+  const phoneRaw = c("company_phone_raw");
+  const phoneDisplay = c("company_phone_display");
+  const email = c("company_email");
 
   return (
     <footer className="relative bg-forest-700 text-cream-200 pt-24 pb-8 overflow-hidden">
@@ -30,15 +30,15 @@ export default function Footer() {
               className="h-20 w-auto object-contain mb-5"
             />
             <p className="text-sm text-cream-200/75 leading-relaxed max-w-xs mb-5">
-              {c("footer_tagline", "UK-Based. Kerala-Sourced. Premium Quality Spices.")}
+              {c("footer_tagline")}
             </p>
             {/* Social icons */}
             <div className="flex items-center gap-3">
-              <a href={`https://wa.me/${c("company_whatsapp","447733058067")}`} aria-label="WhatsApp"
+              <a href={`https://wa.me/${c("company_whatsapp")}`} aria-label="WhatsApp"
                 className="w-9 h-9 rounded-full border border-forest-500 flex items-center justify-center text-cream-200/70 hover:text-gold-400 hover:border-gold-500 transition-colors">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.449A11.9 11.9 0 0012.05 0C5.495 0 .16 5.335.16 11.89c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.87 11.87 0 005.69 1.448h.005c6.555 0 11.89-5.335 11.89-11.89a11.82 11.82 0 00-3.426-8.455z"/></svg>
               </a>
-              <a href={`mailto:${c("company_email","aavglobaltraders@gmail.com")}`} aria-label="Email"
+              <a href={`mailto:${c("company_email")}`} aria-label="Email"
                 className="w-9 h-9 rounded-full border border-forest-500 flex items-center justify-center text-cream-200/70 hover:text-gold-400 hover:border-gold-500 transition-colors">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
               </a>
@@ -100,7 +100,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-cream-200/60">
           <div>
-            © {new Date().getFullYear()} {c("company_name", "AAV Global Traders Ltd")}. Company No. {c("company_no", "16881661")} · EORI {c("company_eori", "GB045558502000")}
+            © {new Date().getFullYear()} {c("company_name")}. Company No. {c("company_no")} · EORI {c("company_eori")}
           </div>
           <div className="flex items-center gap-6">
             <span className="text-gold-500/80">ﻫﻴﻞ · فلفل · كاجو · تمر</span>

@@ -31,68 +31,6 @@ const PILLAR_ICONS = [
   ),
 ];
 
-const PILLARS_FALLBACK = [
-  {
-    title: "Sourcing",
-    image: "/images/product-cardamom-pods.jpeg",
-    headline: "Direct relationships, selected grades.",
-    body: [
-      "We work directly with processors and selected farmers in Kerala's Western Ghats for cardamom and pepper, and with established exporters for nuts and dates.",
-      "Long-term relationships mean we can request specific grades and sorting levels instead of accepting mixed or random quality.",
-    ],
-    details: [
-      "Hand-graded cardamom pods (7.5–8mm+)",
-      "Tellicherry / Malabar pepper grades",
-      "Approved cashew grades W320, W240",
-      "Appearance, aroma, defects and moisture evaluated per lot",
-    ],
-  },
-  {
-    title: "Testing",
-    image: "/images/product-pepper-hero.jpeg",
-    headline: "Lab-tested, batch by batch.",
-    body: [
-      "For cardamom and pepper we request Certificates of Analysis (CoA) from recognised laboratories, linked to each finished batch.",
-      "Additional tests can be arranged on request or according to buyer specification — microbiology, heavy metals, or sensory.",
-    ],
-    details: [
-      "Multi-residue pesticide analysis (EU/UK MRLs)",
-      "Aflatoxins B1 & Total; Ochratoxin A on request",
-      "Moisture content per lot",
-      "Documentation linked to batch codes",
-    ],
-  },
-  {
-    title: "Packing & Traceability",
-    image: "/images/product-cashews-hero.jpeg",
-    headline: "Every pack carries its story.",
-    body: [
-      "Export packs are filled in FSSAI-licensed facilities in India or under controlled conditions in the UK, depending on product and buyer's requirement.",
-      "We use food-grade high-barrier packaging to protect aroma and shelf life. Internally we record which supplier batch went into which finished batch, and which customers received which batches.",
-    ],
-    details: [
-      "Batch number on every pack",
-      "Best-before date & country of origin",
-      "Manufacturer / packer details",
-      "UK importer address (AAV Global Traders Ltd)",
-    ],
-  },
-];
-
-const CERTS_FALLBACK = [
-  {
-    title: "FSSAI Licensed",
-    body: "Licence 11320011000104 — our partner packing facility in India operates under Food Safety and Standards Authority of India authorisation.",
-  },
-  {
-    title: "UK Food Business",
-    body: "AAV Global Traders Ltd is registered with local authority as a food business in the United Kingdom.",
-  },
-  {
-    title: "Full CoA Documentation",
-    body: "Every export shipment is accompanied by Certificate of Analysis, packing list and — where required — phytosanitary certificate.",
-  },
-];
 
 export default function QualityPage() {
   const c = useContent();
@@ -103,11 +41,10 @@ export default function QualityPage() {
     headline: string;
     body: string[];
     details: string[];
-  }>(c("quality_pillars", ""), PILLARS_FALLBACK);
+  }>(c("quality_pillars"));
 
   const certs = parseArr<{ title: string; body: string }>(
-    c("quality_certs", ""),
-    CERTS_FALLBACK
+    c("quality_certs")
   );
 
   return (
@@ -117,19 +54,19 @@ export default function QualityPage() {
         <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
             <div className="eyebrow text-gold-700 mb-5 animate-fade-up">
-              {c("quality_hero_eyebrow", "Quality & food safety")}
+              {c("quality_hero_eyebrow")}
             </div>
             <h1
               className="font-display text-5xl sm:text-6xl lg:text-8xl text-forest-700 leading-[0.98] animate-fade-up"
               style={{ animationDelay: "150ms" }}
             >
-              {c("quality_hero_headline", "Quality from farm to finished pack.")}
+              {c("quality_hero_headline")}
             </h1>
             <p
               className="mt-10 text-xl text-forest-700/80 leading-relaxed max-w-2xl animate-fade-up"
               style={{ animationDelay: "300ms" }}
             >
-              {c("quality_hero_description", "Quality is not a slogan — it is a process. We combine careful sourcing, laboratory testing and strict packing controls in both India and the UK.")}
+              {c("quality_hero_description")}
             </p>
           </div>
         </div>
@@ -205,9 +142,9 @@ export default function QualityPage() {
         <div className="absolute inset-0 pattern-arabesque opacity-25" />
         <div className="relative max-w-[1200px] mx-auto px-6 lg:px-12">
           <Reveal>
-            <div className="eyebrow text-gold-500 mb-5">{c("quality_certs_eyebrow", "Certifications")}</div>
+            <div className="eyebrow text-gold-500 mb-5">{c("quality_certs_eyebrow")}</div>
             <h2 className="font-display text-4xl lg:text-5xl text-gold-200 leading-tight max-w-2xl mb-12">
-              {c("quality_certs_headline", "Documented practice.")}
+              {c("quality_certs_headline")}
             </h2>
           </Reveal>
           <div className="grid md:grid-cols-3 gap-6">
@@ -227,7 +164,7 @@ export default function QualityPage() {
           </div>
           <Reveal className="mt-12 max-w-3xl">
             <p className="text-base text-cream-200/70 italic leading-relaxed border-l-2 border-gold-500 pl-6">
-              {c("quality_certs_note", "As a growing company we are continuously improving our systems. Where formal certifications (ISO, HACCP) are not yet in place, we follow the same principles and keep full documentation of our procedures.")}
+              {c("quality_certs_note")}
             </p>
           </Reveal>
         </div>
@@ -237,10 +174,10 @@ export default function QualityPage() {
         <div className="max-w-[1100px] mx-auto px-6 lg:px-12 text-center">
           <Flourish className="w-32 h-8 text-gold-500 mx-auto mb-6" />
           <h2 className="font-display text-4xl lg:text-5xl text-forest-700 leading-tight mb-6">
-            {c("quality_cta_headline", "Questions about our process?")}
+            {c("quality_cta_headline")}
           </h2>
           <p className="text-lg text-forest-700/70 max-w-xl mx-auto mb-8">
-            {c("quality_cta_description", "We're happy to share CoAs, test reports and detailed specifications on request.")}
+            {c("quality_cta_description")}
           </p>
           <Link href="/contact" className="btn-primary">
             Request documentation

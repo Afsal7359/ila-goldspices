@@ -6,67 +6,6 @@ import { api } from "@/lib/api";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { useContent, parseArr } from "@/lib/content";
 
-const OFFERINGS_FALLBACK = [
-  {
-    eyebrow: "Ila Gold Spices branded",
-    title: "Ready-to-shelf retail packs.",
-    body: "Own-brand retail pouches for independent and chain stores, with shelf-ready cartons and barcoded packs for easy handling.",
-    points: [
-      "50 g – 500 g retail pouches",
-      "Mixed cases & combined deliveries",
-      "High-barrier zipper pouches",
-      "Barcoded · shelf-ready",
-    ],
-    featured: false,
-  },
-  {
-    eyebrow: "Bulk ingredients",
-    title: "Consistent specs for kitchens & manufacturers.",
-    body: "1 kg to 25 kg formats for restaurants, caterers, ready-meal producers, spice blenders and tea companies.",
-    points: [
-      "1 kg, 5 kg, 10–25 kg bags & cartons",
-      "CoA and batch traceability",
-      "Consistent grade across deliveries",
-      "Scheduled regular supply",
-    ],
-    featured: true,
-  },
-  {
-    eyebrow: "Private label",
-    title: "Your brand, our supply chain.",
-    body: "For larger volumes we can pack cardamom, pepper, nuts or dates under your own brand — with full sourcing and QC.",
-    points: [
-      "Sourcing & quality control",
-      "Packing in agreed material & sizes",
-      "Label content for UK compliance",
-      "MOQ & dev fees apply",
-    ],
-    featured: false,
-  },
-];
-
-const PROCESS_STEPS_FALLBACK = [
-  {
-    step: "01",
-    title: "Brief",
-    body: "Share product, pack size, approximate volumes and target market.",
-  },
-  {
-    step: "02",
-    title: "Sample & spec",
-    body: "We send samples, CoAs, and draft specifications for approval.",
-  },
-  {
-    step: "03",
-    title: "Artwork & packing",
-    body: "We assist with label content for UK compliance and pack your brand.",
-  },
-  {
-    step: "04",
-    title: "Deliver",
-    body: "Retail-ready cartons delivered to your warehouse — UK or export.",
-  },
-];
 
 export default function WholesalePage() {
   const c = useContent();
@@ -90,11 +29,10 @@ export default function WholesalePage() {
     body: string;
     points: string[];
     featured: boolean;
-  }>(c("wholesale_offerings", ""), OFFERINGS_FALLBACK);
+  }>(c("wholesale_offerings"));
 
   const processSteps = parseArr<{ step: string; title: string; body: string }>(
-    c("wholesale_process_steps", ""),
-    PROCESS_STEPS_FALLBACK
+    c("wholesale_process_steps")
   );
 
   return (
@@ -104,19 +42,19 @@ export default function WholesalePage() {
         <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
             <div className="eyebrow text-gold-700 mb-5 animate-fade-up">
-              {c("wholesale_hero_eyebrow", "Wholesale & private label")}
+              {c("wholesale_hero_eyebrow")}
             </div>
             <h1
               className="font-display text-5xl sm:text-6xl lg:text-8xl text-forest-700 leading-[0.98] animate-fade-up"
               style={{ animationDelay: "150ms" }}
             >
-              {c("wholesale_hero_headline", "Our brand or yours.")}
+              {c("wholesale_hero_headline")}
             </h1>
             <p
               className="mt-10 text-xl text-forest-700/80 leading-relaxed max-w-2xl animate-fade-up"
               style={{ animationDelay: "300ms" }}
             >
-              {c("wholesale_hero_description", "Whether you are a wholesaler, a retailer, a restaurant group or a brand owner, we can tailor packs and specifications to your needs.")}
+              {c("wholesale_hero_description")}
             </p>
           </div>
         </div>
@@ -188,9 +126,9 @@ export default function WholesalePage() {
         <div className="absolute inset-0 pattern-arabesque opacity-25" />
         <div className="relative max-w-[1200px] mx-auto px-6 lg:px-12">
           <Reveal className="max-w-3xl mb-16">
-            <div className="eyebrow text-gold-500 mb-5">{c("wholesale_process_eyebrow", "Private label process")}</div>
+            <div className="eyebrow text-gold-500 mb-5">{c("wholesale_process_eyebrow")}</div>
             <h2 className="font-display text-4xl lg:text-5xl text-gold-200 leading-tight">
-              {c("wholesale_process_headline", "From concept to first delivery.")}
+              {c("wholesale_process_headline")}
             </h2>
           </Reveal>
 
@@ -214,7 +152,7 @@ export default function WholesalePage() {
 
           <Reveal className="mt-16">
             <p className="text-base text-cream-200/70 italic border-l-2 border-gold-500 pl-6 max-w-2xl">
-              {c("wholesale_process_note", "Minimum order quantities and development fees apply for private-label projects. Please share your approximate volumes and target market with your enquiry.")}
+              {c("wholesale_process_note")}
             </p>
           </Reveal>
         </div>
@@ -226,10 +164,10 @@ export default function WholesalePage() {
         <div className="relative max-w-[900px] mx-auto px-6 lg:px-12">
           <Flourish className="w-32 h-8 text-gold-500 mx-auto mb-6" />
           <h2 className="font-display text-4xl lg:text-5xl text-forest-700 leading-tight mb-2 text-center">
-            {c("wholesale_form_headline", "Share your brief.")}
+            {c("wholesale_form_headline")}
           </h2>
           <p className="text-lg text-forest-700/70 mb-10 max-w-xl mx-auto text-center">
-            {c("wholesale_form_description", "We'll reply with a proposal within 1–2 working days.")}
+            {c("wholesale_form_description")}
           </p>
 
           {submitted ? (
