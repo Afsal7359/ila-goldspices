@@ -60,69 +60,39 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder story */}
+      {/* Our story */}
       <section className="py-20 lg:py-32 bg-cream-100 grain">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-          <Reveal className="lg:col-span-5 lg:sticky lg:top-28">
-            <div className="aspect-[4/5] relative overflow-hidden">
-              <img
-                src="/images/product-cardamom-hero.jpeg"
-                alt="Ila Gold Spices — Kerala cardamom"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-forest-700/30 via-transparent to-forest-800/85" />
-              <div className="absolute inset-0 flex flex-col justify-between p-10 text-gold-200">
-                <div className="eyebrow text-gold-500">Founder</div>
-                <div>
-                  <Flourish className="w-28 h-6 text-gold-500 mb-5" />
-                  <div className="font-display text-4xl leading-tight">
-                    {c("about_founder_name", "Muhammed Afeef")}
-                    <br />
-                    <span className="italic">{c("about_founder_surname", "Vadakkeni")}</span>
+        <div className="max-w-[900px] mx-auto px-6 lg:px-12 space-y-8 text-lg text-forest-700/85 leading-relaxed">
+          <Reveal>
+            <p>
+              {c("about_story_para1", "Growing up with the fragrance of freshly cracked cardamom pods and pepper roasted in homemade masalas, we know how much quality matters. After moving to the UK we saw a gap for spices that combine authentic Kerala origin, proper food-safety testing and modern packaging — all handled by a UK-based company that understands both worlds.")}
+            </p>
+          </Reveal>
+          <Reveal delay={100}>
+            <p>
+              {c("about_story_para2", "Today we work with a network of reliable processors and farmers in Kerala and selected origins, importing and packing whole green cardamom, black pepper, cashew nuts, mixed nuts and dates. Our aim is to offer products that are not only flavourful, but also safe, consistent and traceable.")}
+            </p>
+          </Reveal>
+
+          <Reveal delay={200}>
+            <div className="pt-6 border-t border-gold-500/30">
+              <h2 className="font-display text-3xl lg:text-4xl text-forest-700 mb-6">
+                {c("about_values_headline", "Our values.")}
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-6">
+                {values.map((v) => (
+                  <div key={v.title}>
+                    <div className="text-gold-700 font-display text-2xl italic mb-1">
+                      {v.title}
+                    </div>
+                    <p className="text-base text-forest-700/75 leading-relaxed">
+                      {v.body}
+                    </p>
                   </div>
-                  <div className="mt-4 text-sm tracking-widest uppercase text-gold-500/80">
-                    {c("about_founder_title", "Founder, AAV Global Traders Ltd")}
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </Reveal>
-
-          <div className="lg:col-span-7 space-y-8 text-lg text-forest-700/85 leading-relaxed">
-            <Reveal>
-              <p>
-                <span className="font-display text-5xl text-gold-700 float-left leading-none mr-3 mt-1">
-                  G
-                </span>
-                {c("about_story_para1", "rowing up with the fragrance of freshly cracked cardamom pods and pepper roasted in homemade masalas, we know how much quality matters. After moving to the UK we saw a gap for spices that combine authentic Kerala origin, proper food-safety testing and modern packaging — all handled by a UK-based company that understands both worlds.")}
-              </p>
-            </Reveal>
-            <Reveal delay={100}>
-              <p>
-                {c("about_story_para2", "Today we work with a network of reliable processors and farmers in Kerala and selected origins, importing and packing whole green cardamom, black pepper, cashew nuts, mixed nuts and dates. Our aim is to offer products that are not only flavourful, but also safe, consistent and traceable.")}
-              </p>
-            </Reveal>
-
-            <Reveal delay={200}>
-              <div className="pt-6 border-t border-gold-500/30">
-                <h2 className="font-display text-3xl lg:text-4xl text-forest-700 mb-6">
-                  {c("about_values_headline", "Our values.")}
-                </h2>
-                <div className="grid sm:grid-cols-2 gap-6">
-                  {values.map((v) => (
-                    <div key={v.title}>
-                      <div className="text-gold-700 font-display text-2xl italic mb-1">
-                        {v.title}
-                      </div>
-                      <p className="text-base text-forest-700/75 leading-relaxed">
-                        {v.body}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </div>
         </div>
       </section>
 
