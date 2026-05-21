@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
-import Logo from "@/components/Logo";
 
 const navItems = [
   { href: "/products", label: "Products" },
@@ -18,7 +18,14 @@ export default function Nav() {
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-3 flex items-center justify-between gap-8">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0" aria-label="Ila Gold Spices home">
-          <Logo />
+          <Image
+            src="/images/image.png"
+            alt="Ila Gold Spices"
+            width={300}
+            height={300}
+            className="h-14 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useContent } from "@/lib/content";
-import Logo from "@/components/Logo";
 
 export default function Footer() {
   const c = useContent();
@@ -22,7 +22,13 @@ export default function Footer() {
         {/* Top */}
         <div className="grid lg:grid-cols-12 gap-12 pb-16 border-b border-gold-500/20">
           <div className="lg:col-span-4">
-            <Logo className="mb-6" textClass="text-gold-300" subClass="text-gold-400/60" />
+            <Image
+              src="/images/image.png"
+              alt="Ila Gold Spices"
+              width={300}
+              height={300}
+              className="h-20 w-auto object-contain mb-5"
+            />
             <p className="text-sm text-cream-200/75 leading-relaxed max-w-xs mb-5">
               {c("footer_tagline", "UK-Based. Kerala-Sourced. Premium Quality Spices.")}
             </p>
