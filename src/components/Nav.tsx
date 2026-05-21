@@ -23,7 +23,7 @@ export default function Nav() {
             alt="Ila Gold Spices"
             width={854}
             height={670}
-            className="h-14 w-auto object-contain"
+            className="h-14 w-auto object-contain brightness-0 invert"
             priority
           />
         </Link>

@@ -27,7 +27,7 @@ export default function Footer() {
               alt="Ila Gold Spices"
               width={854}
               height={670}
-              className="h-20 w-auto object-contain mb-5"
+              className="h-20 w-auto object-contain brightness-0 invert mb-5"
             />
             <p className="text-sm text-cream-200/75 leading-relaxed max-w-xs mb-5">
               {c("footer_tagline", "UK-Based. Kerala-Sourced. Premium Quality Spices.")}
