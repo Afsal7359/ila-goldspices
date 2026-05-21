@@ -51,7 +51,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['"Roboto"', "system-ui", "sans-serif"],
+        display: ['"Playfair Display"', "Georgia", "serif"],
         sans:    ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
         mono:    ["ui-monospace", "monospace"],
       },
