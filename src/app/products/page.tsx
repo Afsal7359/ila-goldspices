@@ -53,7 +53,7 @@ export default function ProductsPage() {
               style={{ animationDelay: "150ms" }}
             >
               Spices, nuts
-              <br /><span className="font-sans not-italic font-semibold">&</span> <span className="italic text-gold-700">dates.</span>
+              <br /><span className="font-sans not-italic font-semibold">&</span> dates.
             </h1>
             <p
               className="mt-8 text-xl text-forest-700/80 leading-relaxed max-w-2xl animate-fade-up"
