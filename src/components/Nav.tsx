@@ -17,7 +17,7 @@ export default function Nav() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-forest-700 border-b border-forest-600">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-3 flex items-center justify-between gap-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center shrink-0" aria-label="Ila Gold Spices home">
+        <Link href="/" className="flex items-center shrink-0 -ml-4 lg:-ml-10" aria-label="Ila Gold Spices home">
           <Image
             src="/images/logo.png"
             alt="Ila Gold Spices"

@@ -10,6 +10,13 @@ export default function AboutPage() {
   const values = parseArr<{ title: string; body: string }>(c("about_values"));
   const registeredLines = c("company_address_registered").split("\n").filter(Boolean);
   const tradingLines    = c("company_address_trading").split("\n").filter(Boolean);
+  const storyImage      = c("about_story_image");
+  const stripImages     = [
+    c("about_strip_image_1"),
+    c("about_strip_image_2"),
+    c("about_strip_image_3"),
+    c("about_strip_image_4"),
+  ].filter(Boolean);
 
   return (
     <>
@@ -41,12 +48,14 @@ export default function AboutPage() {
       <section className="py-20 lg:py-32 bg-cream-100 grain">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           <Reveal className="lg:col-span-5 lg:sticky lg:top-28">
-            <div className="aspect-[4/5] relative overflow-hidden">
-              <img
-                src="/images/product-cardamom-hero.jpeg"
-                alt="Ila Gold Spices — Kerala cardamom"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+            <div className="aspect-[4/5] relative overflow-hidden bg-cream-200">
+              {storyImage && (
+                <img
+                  src={storyImage}
+                  alt="Ila Gold Spices"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-b from-forest-700/20 via-transparent to-forest-800/60" />
             </div>
           </Reveal>
@@ -87,24 +96,21 @@ export default function AboutPage() {
       </section>
 
       {/* Product image strip */}
-      <section className="py-0 overflow-hidden">
-        <div className="flex">
-          {[
-            { src: "/images/product-cardamom-2.jpeg", alt: "Whole green cardamom" },
-            { src: "/images/product-pepper-hero.jpeg", alt: "Malabar black pepper" },
-            { src: "/images/product-cashews-hero.jpeg", alt: "Premium cashew nuts" },
-            { src: "/images/product-dates.jpeg", alt: "Premium dates" },
-          ].map((img) => (
-            <div key={img.src} className="flex-1 aspect-square overflow-hidden">
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-          ))}
-        </div>
-      </section>
+      {stripImages.length > 0 && (
+        <section className="py-0 overflow-hidden">
+          <div className="flex">
+            {stripImages.map((src, i) => (
+              <div key={`${src}-${i}`} className="flex-1 aspect-square overflow-hidden">
+                <img
+                  src={src}
+                  alt={`Ila Gold Spices — image ${i + 1}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Company details */}
       <section className="py-20 lg:py-28 bg-forest-700 text-cream-200 relative overflow-hidden">

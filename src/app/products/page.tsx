@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { api, ApiProduct } from "@/lib/api";
+import { api, cache, ApiProduct } from "@/lib/api";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState<ApiProduct[]>([]);
-  const [loading,  setLoading]  = useState(true);
+  const [products, setProducts] = useState<ApiProduct[]>(() => cache.getProducts() ?? []);
+  const [loading,  setLoading]  = useState(() => !cache.getProducts());
 
   useEffect(() => {
     api.getProducts().then((data) => {

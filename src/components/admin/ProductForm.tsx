@@ -14,7 +14,9 @@ export default function ProductForm({ initial, isNew }: Props) {
   const [saving, setSaving] = useState(false);
   const [imgSaved, setImgSaved] = useState<string | null>(null);
   const widgetRef = useRef<any>(null);
+  const galleryWidgetRef = useRef<any>(null);
   const activeFieldRef = useRef<"window_image" | "product_image">("window_image");
+  const galleryRef = useRef<string[]>(Array.isArray(initial?.gallery_images) ? initial!.gallery_images! : []);
 
   const [form, setForm] = useState({
     id:              initial?.id              ?? "",
@@ -33,8 +35,10 @@ export default function ProductForm({ initial, isNew }: Props) {
     bulk_packs:      Array.isArray(initial?.bulk_packs)   ? initial.bulk_packs.join(", ")   : (initial?.bulk_packs   ?? ""),
     window_image:    initial?.window_image    ?? "",
     product_image:   initial?.product_image   ?? "",
+    gallery_images:  Array.isArray(initial?.gallery_images) ? initial!.gallery_images! : [] as string[],
     coming_soon:     initial?.coming_soon     ?? false,
     active:          initial?.active          ?? true,
+    position:        String(initial?.position ?? ""),
     retail_price:    String(initial?.retail_price    ?? ""),
     wholesale_price: String(initial?.wholesale_price ?? ""),
     currency:        initial?.currency        ?? "AED",
@@ -44,46 +48,73 @@ export default function ProductForm({ initial, isNew }: Props) {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
-  // Initialise the Cloudinary upload widget once
+  // Initialise the Cloudinary upload widgets once
   useEffect(() => {
     if (!CLOUD_NAME || !UPLOAD_PRESET || typeof window === "undefined") return;
 
-    function initWidget() {
-      if (widgetRef.current) return;
-      widgetRef.current = (window as any).cloudinary.createUploadWidget(
-        {
-          cloudName:    CLOUD_NAME,
-          uploadPreset: UPLOAD_PRESET,
-          folder:       "ila-gold-spices",
-          multiple:     false,
-          sources:      ["local", "url"],
-          clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
-          maxFileSize:  5_000_000,
-        },
-        async (error: any, result: any) => {
-          if (!error && result?.event === "success") {
-            const url = result.info.secure_url;
-            const field = activeFieldRef.current;
-            set(field, url);
-            // Auto-save to Firestore immediately if editing an existing product
-            if (initial?.id) {
-              await api.upsertProduct({ id: initial.id, [field]: url });
-              setImgSaved(field);
-              setTimeout(() => setImgSaved(null), 2500);
+    function initWidgets() {
+      if (!widgetRef.current) {
+        widgetRef.current = (window as any).cloudinary.createUploadWidget(
+          {
+            cloudName:    CLOUD_NAME,
+            uploadPreset: UPLOAD_PRESET,
+            folder:       "ila-gold-spices",
+            multiple:     false,
+            sources:      ["local", "url"],
+            clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
+            maxFileSize:  5_000_000,
+          },
+          async (error: any, result: any) => {
+            if (!error && result?.event === "success") {
+              const url = result.info.secure_url;
+              const field = activeFieldRef.current;
+              set(field, url);
+              if (initial?.id) {
+                await api.upsertProduct({ id: initial.id, [field]: url });
+                setImgSaved(field);
+                setTimeout(() => setImgSaved(null), 2500);
+              }
             }
           }
-        }
-      );
+        );
+      }
+
+      if (!galleryWidgetRef.current) {
+        galleryWidgetRef.current = (window as any).cloudinary.createUploadWidget(
+          {
+            cloudName:    CLOUD_NAME,
+            uploadPreset: UPLOAD_PRESET,
+            folder:       "ila-gold-spices/gallery",
+            multiple:     true,
+            sources:      ["local", "url"],
+            clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
+            maxFileSize:  5_000_000,
+          },
+          async (error: any, result: any) => {
+            if (!error && result?.event === "success") {
+              const url = result.info.secure_url;
+              const next = [...galleryRef.current, url];
+              galleryRef.current = next;
+              setForm((f) => ({ ...f, gallery_images: next }));
+              if (initial?.id) {
+                await api.upsertProduct({ id: initial.id, gallery_images: next });
+                setImgSaved("gallery_images");
+                setTimeout(() => setImgSaved(null), 2500);
+              }
+            }
+          }
+        );
+      }
     }
 
     if ((window as any).cloudinary) {
-      initWidget();
+      initWidgets();
       return;
     }
 
     const script = document.createElement("script");
     script.src = "https://upload-widget.cloudinary.com/global/all.js";
-    script.onload = initWidget;
+    script.onload = initWidgets;
     document.head.appendChild(script);
   }, []);
 
@@ -93,6 +124,25 @@ export default function ProductForm({ initial, isNew }: Props) {
       widgetRef.current.open();
     } else {
       alert("Cloudinary not loaded. Check NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET in .env.local");
+    }
+  }
+
+  function openGalleryUpload() {
+    if (galleryWidgetRef.current) {
+      galleryWidgetRef.current.open();
+    } else {
+      alert("Cloudinary not loaded. Check NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET in .env.local");
+    }
+  }
+
+  async function removeGalleryImage(index: number) {
+    const next = galleryRef.current.filter((_, i) => i !== index);
+    galleryRef.current = next;
+    setForm((f) => ({ ...f, gallery_images: next }));
+    if (initial?.id) {
+      await api.upsertProduct({ id: initial.id, gallery_images: next });
+      setImgSaved("gallery_images");
+      setTimeout(() => setImgSaved(null), 2500);
     }
   }
 
@@ -106,6 +156,8 @@ export default function ProductForm({ initial, isNew }: Props) {
       uses:            form.uses.split("\n").map((s: string) => s.trim()).filter(Boolean),
       retail_packs:    form.retail_packs.split(",").map((s: string) => s.trim()).filter(Boolean),
       bulk_packs:      form.bulk_packs.split(",").map((s: string) => s.trim()).filter(Boolean),
+      gallery_images:  form.gallery_images,
+      position:        form.position ? parseInt(form.position, 10) : undefined,
       retail_price:    form.retail_price    ? parseFloat(form.retail_price)    : undefined,
       wholesale_price: form.wholesale_price ? parseFloat(form.wholesale_price) : undefined,
     };
@@ -224,11 +276,58 @@ export default function ProductForm({ initial, isNew }: Props) {
             {imageField("Window Image (product card background)", "window_image")}
             {imageField("Product Image (detail page hero)",        "product_image")}
           </div>
+
+          {/* Gallery */}
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Gallery Images (shown at bottom of detail page)
+              </label>
+              {imgSaved === "gallery_images" && (
+                <span className="text-xs text-green-600 font-medium">Saved ✓</span>
+              )}
+            </div>
+            <p className="text-xs text-gray-400 mb-3">
+              Upload one or more images. They appear in a grid at the bottom of the product detail page.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-3">
+              {form.gallery_images.map((url, i) => (
+                <div key={`${url}-${i}`} className="relative group border border-gray-200 rounded bg-gray-50 overflow-hidden">
+                  <img
+                    src={url}
+                    alt={`Gallery ${i + 1}`}
+                    className="w-full h-28 object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeGalleryImage(i)}
+                    className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                    aria-label={`Remove image ${i + 1}`}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={openGalleryUpload}
+                className="border-2 border-dashed border-gray-300 rounded h-28 flex items-center justify-center text-xs text-gray-500 hover:border-amber-500 hover:text-amber-600 transition-colors"
+              >
+                + Add Image
+              </button>
+            </div>
+            {form.gallery_images.length > 0 && (
+              <p className="text-xs text-gray-400">
+                {form.gallery_images.length} image{form.gallery_images.length === 1 ? "" : "s"} in gallery.
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-6">
-          <h3 className="font-semibold text-forest-700 mb-4">Visibility</h3>
-          <div className="flex gap-6">
+          <h3 className="font-semibold text-forest-700 mb-4">Visibility & Display Order</h3>
+          <div className="flex flex-wrap gap-6 items-center">
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input type="checkbox" checked={form.active} onChange={(e) => set("active", e.target.checked)} className="w-4 h-4" />
               Active (visible on website)
@@ -237,6 +336,19 @@ export default function ProductForm({ initial, isNew }: Props) {
               <input type="checkbox" checked={form.coming_soon} onChange={(e) => set("coming_soon", e.target.checked)} className="w-4 h-4" />
               Show "Coming Soon" badge
             </label>
+            <div className="flex items-center gap-2 text-sm">
+              <label htmlFor="position-input" className="text-gray-600">Display position</label>
+              <input
+                id="position-input"
+                type="number"
+                value={form.position}
+                onChange={(e) => set("position", e.target.value)}
+                placeholder="e.g. 1"
+                min={0}
+                className="w-24 border border-gray-200 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-forest-600"
+              />
+              <span className="text-xs text-gray-400">(lower = shown first)</span>
+            </div>
           </div>
         </div>
 

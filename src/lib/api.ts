@@ -24,8 +24,10 @@ export type ApiProduct = {
   fill_texture: string;
   window_image?: string;
   product_image?: string;
+  gallery_images?: string[];
   coming_soon: boolean;
   active: boolean;
+  position?: number;
   retail_price?: number;
   wholesale_price?: number;
   currency: string;
@@ -76,8 +78,10 @@ function docToProduct(id: string, data: any): ApiProduct {
     fill_texture:    data.fill_texture    ?? '',
     window_image:    data.window_image,
     product_image:   data.product_image,
+    gallery_images:  Array.isArray(data.gallery_images) ? data.gallery_images : [],
     coming_soon:     data.coming_soon     ?? false,
     active:          data.active          ?? true,
+    position:        typeof data.position === 'number' ? data.position : undefined,
     retail_price:    data.retail_price,
     wholesale_price: data.wholesale_price,
     currency:        data.currency        ?? 'AED',
@@ -96,15 +100,49 @@ function docToRow(id: string, data: any) {
   return { id, ...data, created_at };
 }
 
+// ---- cache helpers (instant first paint on repeat visits) ----
+
+const PRODUCTS_CACHE_KEY = 'ila_products_v1';
+const PRODUCT_CACHE_PREFIX = 'ila_product_v1:';
+const CONTENT_CACHE_KEY = 'ila_content_v1';
+
+function readCache<T>(key: string): T | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : null;
+  } catch { return null; }
+}
+
+function writeCache(key: string, value: unknown) {
+  if (typeof window === 'undefined') return;
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+}
+
+export const cache = {
+  getProducts: (): ApiProduct[] | null => readCache(PRODUCTS_CACHE_KEY),
+  getProduct:  (slug: string): ApiProduct | null => readCache(PRODUCT_CACHE_PREFIX + slug),
+  getContent:  (): Record<string, string> | null => readCache(CONTENT_CACHE_KEY),
+};
+
+function sortByPosition(a: ApiProduct, b: ApiProduct) {
+  const pa = a.position ?? 9999;
+  const pb = b.position ?? 9999;
+  if (pa !== pb) return pa - pb;
+  return (a.name || '').localeCompare(b.name || '');
+}
+
 // ---- public API ----
 
 export const api = {
-  /** Active products for public site */
+  /** Active products for public site (sorted by display position) */
   getProducts: async (): Promise<ApiProduct[] | null> => {
     try {
       const q = query(collection(db, 'products'), where('active', '==', true));
       const snap = await getDocs(q);
-      return snap.docs.map(d => docToProduct(d.id, d.data()));
+      const list = snap.docs.map(d => docToProduct(d.id, d.data())).sort(sortByPosition);
+      writeCache(PRODUCTS_CACHE_KEY, list);
+      return list;
     } catch { return null; }
   },
 
@@ -115,7 +153,9 @@ export const api = {
       const snap = await getDocs(q);
       if (snap.empty) return null;
       const d = snap.docs[0];
-      return docToProduct(d.id, d.data());
+      const product = docToProduct(d.id, d.data());
+      writeCache(PRODUCT_CACHE_PREFIX + slug, product);
+      return product;
     } catch { return null; }
   },
 
@@ -291,6 +331,7 @@ export const api = {
         const data = d.data();
         result[data.key ?? d.id] = data.value ?? '';
       });
+      writeCache(CONTENT_CACHE_KEY, result);
       return result;
     } catch { return null; }
   },

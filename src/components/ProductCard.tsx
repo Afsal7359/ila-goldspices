@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ApiProduct } from "@/lib/api";
 
 export default function ProductCard({ product }: { product: ApiProduct }) {
-  const displayImage = product.product_image || product.window_image;
+  const displayImage = product.window_image || product.product_image;
 
   return (
     <Link

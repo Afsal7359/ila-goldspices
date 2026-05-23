@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { api, ApiProduct } from "@/lib/api";
+import { api, cache, ApiProduct } from "@/lib/api";
 
 export default function FeaturedProducts() {
-  const [products, setProducts] = useState<ApiProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<ApiProduct[]>(
+    () => (cache.getProducts() ?? []).filter((p) => p.active !== false)
+  );
+  const [loading, setLoading] = useState(() => !cache.getProducts());
 
   useEffect(() => {
     api.getProducts().then((data) => {
@@ -34,7 +36,7 @@ export default function FeaturedProducts() {
     <>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         {products.map((product) => {
-          const img = product.product_image || product.window_image || "/images/product-cardamom-hero.jpeg";
+          const img = product.window_image || product.product_image || "/images/product-cardamom-hero.jpeg";
           return (
             <Link
               key={product.slug}
