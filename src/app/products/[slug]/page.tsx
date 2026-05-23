@@ -154,6 +154,34 @@ export default function ProductPage() {
         </div>
       </section>
 
+      {/* Gallery */}
+      {product.gallery_images && product.gallery_images.length > 0 && (
+        <section className="py-20 lg:py-28 bg-cream-100 grain">
+          <div className="max-w-[1300px] mx-auto px-6 lg:px-12">
+            <Reveal className="text-center max-w-2xl mx-auto mb-12">
+              <Flourish className="w-24 h-6 text-gold-500 mx-auto mb-5" />
+              <div className="eyebrow text-gold-700 mb-3">Gallery</div>
+              <h2 className="font-display text-4xl lg:text-5xl text-forest-700 leading-tight">
+                More <span className="italic text-gold-700">images.</span>
+              </h2>
+            </Reveal>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {product.gallery_images.map((url, i) => (
+                <Reveal key={`${url}-${i}`} delay={i * 60}>
+                  <div className="aspect-square overflow-hidden bg-cream-200 border border-gold-200/40 group">
+                    <img
+                      src={url}
+                      alt={`${product.name} — ${i + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Story */}
       <section className="py-20 lg:py-28 bg-cream-100 grain">
         <div className="max-w-[1100px] mx-auto px-6 lg:px-12">
@@ -251,34 +279,6 @@ export default function ProductPage() {
           </div>
         </div>
       </section>
-
-      {/* Gallery */}
-      {product.gallery_images && product.gallery_images.length > 0 && (
-        <section className="py-20 lg:py-28 bg-cream-100 grain">
-          <div className="max-w-[1300px] mx-auto px-6 lg:px-12">
-            <Reveal className="text-center max-w-2xl mx-auto mb-12">
-              <Flourish className="w-24 h-6 text-gold-500 mx-auto mb-5" />
-              <div className="eyebrow text-gold-700 mb-3">Gallery</div>
-              <h2 className="font-display text-4xl lg:text-5xl text-forest-700 leading-tight">
-                More <span className="italic text-gold-700">images.</span>
-              </h2>
-            </Reveal>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {product.gallery_images.map((url, i) => (
-                <Reveal key={`${url}-${i}`} delay={i * 60}>
-                  <div className="aspect-square overflow-hidden bg-cream-200 border border-gold-200/40 group">
-                    <img
-                      src={url}
-                      alt={`${product.name} — ${i + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* CTA */}
       <section className="relative py-20 lg:py-28 bg-cream-100">
