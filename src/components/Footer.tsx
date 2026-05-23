@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="grid lg:grid-cols-12 gap-12 pb-16 border-b border-gold-500/20">
           <div className="lg:col-span-4">
             <Image
-              src="/images/image.png"
+              src="/images/logo.png"
               alt="Ila Gold Spices"
               width={300}
               height={300}

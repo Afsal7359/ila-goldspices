@@ -9,7 +9,7 @@ export default function LoadingScreen({ visible }: { visible: boolean }) {
       }`}
     >
       <Image
-        src="/images/image.png"
+        src="/images/logo.png"
         alt="Ila Gold Spices"
         width={160}
         height={149}

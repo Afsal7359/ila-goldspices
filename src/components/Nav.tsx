@@ -19,7 +19,7 @@ export default function Nav() {
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0" aria-label="Ila Gold Spices home">
           <Image
-            src="/images/image.png"
+            src="/images/logo.png"
             alt="Ila Gold Spices"
             width={300}
             height={300}
