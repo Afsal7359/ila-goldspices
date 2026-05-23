@@ -25,9 +25,9 @@ export default function Footer() {
             <Image
               src="/images/logo.png"
               alt="Ila Gold Spices"
-              width={300}
-              height={300}
-              className="h-20 w-auto object-contain mb-5"
+              width={400}
+              height={400}
+              className="h-28 md:h-32 w-auto object-contain mb-5"
             />
             <p className="text-sm text-cream-200/75 leading-relaxed max-w-xs mb-5">
               {c("footer_tagline")}

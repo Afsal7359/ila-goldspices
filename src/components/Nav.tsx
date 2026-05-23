@@ -21,9 +21,9 @@ export default function Nav() {
           <Image
             src="/images/logo.png"
             alt="Ila Gold Spices"
-            width={300}
-            height={300}
-            className="h-14 w-auto object-contain"
+            width={400}
+            height={400}
+            className="h-20 md:h-24 w-auto object-contain"
             priority
           />
         </Link>
